@@ -1,3 +1,12 @@
+/*
+* File: main.cpp
+* Author: Joshua Reck
+* NetID: reckj2
+*
+* Description: Creates a playlist using linked lists and header files.
+*
+*/
+
 #include <iostream>
 #include <string>
 
@@ -6,9 +15,11 @@
 using namespace std;
 
 int main(void) {
+	//Creates variables for user input
 	char userOption = 'z';
 	string userTitle;
 
+	//Creates linked list nodes of class PlaylistNode
 	PlaylistNode* head = NULL;
 	head = new PlaylistNode();
 	PlaylistNode* temp = NULL;
@@ -23,6 +34,7 @@ int main(void) {
 	temp5 = new PlaylistNode();
 	PlaylistNode* n = NULL;
 
+	//creates variables for user input
 	string tempID;
 	string tempName;
 	string tempArtist;
@@ -32,13 +44,15 @@ int main(void) {
 	int num;
 	int totalTime;
 
+	//prompts user for playlist title
 	cout << "Enter playlist's title:" << endl;
 	getline(cin, userTitle);
 	cout << endl;
 	
-
+	//while the user does not choose the quit option
 	while (userOption != 'q') {
-		//cout << endl;
+		
+		//Displays menu for user
 		cout << userTitle << " PLAYLIST MENU" << endl;
 		cout << "a - Add song" << endl;
 		cout << "d - Remove song" << endl;
@@ -48,22 +62,26 @@ int main(void) {
 		cout << "o - Output full playlist" << endl;
 		cout << "q - Quit" << endl;
 		cout << endl;
-
+		
+		//recieve user input
 		cout << "Choose an option:" << endl;
 		cin >> userOption;
 
+		// while the user has not chosen a valid option
 		while (userOption != 'a' && userOption != 'd' && userOption != 'c' && userOption != 's' && userOption != 'o' && userOption != 't' && userOption != 'q') {
 			cout << "Choose an option:";
 			cin >> userOption;
 			cout << endl;
 		}
 		
+		//if the user chooses to add a song
 		if (userOption == 'a') {
 			cout <<"ADD SONG" << endl;
 			n = new PlaylistNode();
 
 			cin.ignore(256, '\n');
 
+			//Recieves user input for song attributes
 			cout << "Enter song's unique ID:" << endl;
 			getline(cin, tempID);
 			cout << "Enter song's name:" << endl;
@@ -73,30 +91,43 @@ int main(void) {
 			cout << "Enter song's length (in seconds):" << endl;
 			cin >> tempLength;
 
+			//sets song attributes
 			n->SetID(tempID);
 			n->SetSongName(tempName);
 			n->SetArtistName(tempArtist);
 			n->SetSongLength(tempLength);
 
+			//adds new node to linked list
 			head->InsertAfter(n);
 			cout << endl;
 		}
+		
+		//if user chooses to remove a song
 		if (userOption == 'd') {
+			
+			//receives user input
 			cin.ignore(256, '\n');
 			cout << "REMOVE SONG" << endl;
 			cout << "Enter song's unique ID:" << endl;
 			getline(cin, tempID);
 			num = 0;
+			
+			//temporary nodes set for traversing
 			temp = head;
 			temp2 = temp;
 			temp = temp->GetNext();
+			
+			//While song's ID is not the same as user input
 			while (tempID.compare(temp->GetID()) != 0) {
+				//If 
 				if (temp->GetNext() == 0) {
 					break;
 				}
 				temp2 = temp;
 				temp = temp->GetNext();
 			}
+			
+			
 			if (tempID.compare(temp->GetID()) == 0) {
 				num = 1;
 				cout << "\"" << temp->GetSongName() << "\" removed." << endl;
